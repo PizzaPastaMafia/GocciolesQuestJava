@@ -13,11 +13,17 @@ public class GamePanel extends JPanel implements Runnable {
     final int scale = 5; // I'll use a scale because of big screens
 
     // I'll follow a 4:3 window ratio
-    public final int tileSize = originalTileSize * scale; // In this case it'll be 86x86 pixel per tile
+    public final int tileSize = originalTileSize * scale; // In this case it'll be 80x80 pixel per tile
     public final int maxScreenCol = 16;
     public final int maxScreenRow = 12;
     public final int screenWidth = tileSize * maxScreenCol; // Width
     public final int screenHeight = tileSize * maxScreenRow; // Height
+
+    // WORLD SETTINGS
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int maxWorldWidth = tileSize * maxWorldCol;
+    public final int maxWorldHeight = tileSize * maxWorldRow;
 
     // FPS
     int FPS = 144;
@@ -25,7 +31,8 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
-    Player player = new Player(this,keyH);
+    public CollisionChecker cChecker = new CollisionChecker(this);
+    public Player player = new Player(this,keyH);
 
 
 

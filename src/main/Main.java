@@ -1,12 +1,15 @@
 package main;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
         JFrame window = new JFrame("Gocciole's Quest");
+        Image logo = Toolkit.getDefaultToolkit().getImage("res/logo.png");
+        window.setIconImage(logo);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
 
