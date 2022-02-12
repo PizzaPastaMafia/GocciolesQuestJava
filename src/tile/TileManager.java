@@ -22,6 +22,7 @@ public class TileManager {
         mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
 
         getTileImage();
+        loadMap("/maps/map01.txt");
     }
 
     public void getTileImage() {
@@ -37,15 +38,24 @@ public class TileManager {
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
 
+            tile[3] = new Tile();
+            tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/earth.png"));
+
+            tile[4] = new Tile();
+            tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree.png"));
+
+            tile[5] = new Tile();
+            tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand.png"));
+
 
         }catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadMap(){
+    public void loadMap(String filePath){
         try{
-            InputStream is = getClass().getResourceAsStream("/maps/map01.txt");
+            InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             int col = 0;
@@ -77,10 +87,6 @@ public class TileManager {
 
     public void draw(Graphics2D g2) {
 
-        //g2.drawImage(tile[0].image,0*gp.tileSize,0*gp.tileSize,gp.tileSize, gp.tileSize, null);
-        //g2.drawImage(tile[1].image,1*gp.tileSize,0*gp.tileSize,gp.tileSize, gp.tileSize, null);
-        //g2.drawImage(tile[2].image,2*gp.tileSize,0*gp.tileSize,gp.tileSize, gp.tileSize, null);
-
         int col = 0;
         int row = 0;
         int x = 0;
@@ -88,7 +94,9 @@ public class TileManager {
 
         while(col < gp.maxScreenCol && row < gp.maxScreenRow) {
 
-            g2.drawImage(tile[0].image,x,y,gp.tileSize,gp.tileSize,null);
+            int tileNum = mapTileNum[col][row];
+
+            g2.drawImage(tile[tileNum].image,x,y,gp.tileSize,gp.tileSize,null);
             col++;
             x += gp.tileSize;
 
