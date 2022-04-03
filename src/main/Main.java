@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] arags) {
 
         JFrame window = new JFrame("Gocciole's Quest");
         Image logo = Toolkit.getDefaultToolkit().getImage("res/logo.png");
@@ -23,7 +23,7 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
+        gamePanel.setupGame();
         gamePanel.startGameThread();
     }
-
 }
