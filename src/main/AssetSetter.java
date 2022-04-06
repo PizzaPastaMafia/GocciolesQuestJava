@@ -1,5 +1,6 @@
 package main;
 
+import entity.npcDialogoScelta;
 import entity.npcProva;
 import object.OBJ_Boots;
 import object.OBJ_Chest;
@@ -18,6 +19,9 @@ public class AssetSetter {
         gp.npc[0] = new npcProva(gp);
         gp.npc[0].worldX = gp.tileSize*21;
         gp.npc[0].worldY = gp.tileSize*21;
+        gp.npc[1] = new npcDialogoScelta(gp);
+        gp.npc[1].worldX = gp.tileSize*25;
+        gp.npc[1].worldY = gp.tileSize*21;
     }
 
     public void setObject() {

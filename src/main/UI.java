@@ -11,12 +11,18 @@ public class UI {
     Graphics2D g2;
     Font arial_40, arial_80B;
     public String currentDialogue = "";
-    String dialogue[] = new String[20];
+    public String[] currentAnsware = {"", ""};
+    String dialogue[] = new String[5];
+    public boolean answare;
+    public boolean endDialogue;
+    public boolean choice;
+    public boolean selected;
 
     public UI(GamePanel gp) {
         this.gp = gp;
-        arial_40 = new Font("Arial", Font.PLAIN, 40);
-        arial_80B = new Font("Arial", Font.BOLD, 80);
+        arial_40 = new Font("Arial", Font.PLAIN, 30);
+        arial_80B = new Font("Arial", Font.BOLD, 60);
+        selected = false;
     }
 
     public void draw(Graphics2D g2) {
@@ -44,6 +50,16 @@ public class UI {
 
         drawDialogueWindow(x, y,width, height);
 
+        if(answare){
+            boolean selected, antiSelected;
+            selected = choice;
+
+            antiSelected = !selected;
+
+            drawAnswareWindow(x+gp.tileSize, y+gp.tileSize*2, width-gp.tileSize*9, height-gp.tileSize*2-10, 0, selected);
+            drawAnswareWindow(x+gp.tileSize*8, y+gp.tileSize*2, width-gp.tileSize*9, height-gp.tileSize*2-10, 1, antiSelected);
+        }
+
         x = x + gp.tileSize;
         y = y + gp.tileSize;
 
@@ -64,6 +80,28 @@ public class UI {
 
         g2.setStroke(new BasicStroke());
         g2.drawRoundRect(x+5,y+5, width-10, height-10,25,25);
+    }
+
+    public void drawAnswareWindow(int x, int y, int width, int height, int rispostaNum, boolean selected){
+        Color c;
+        if(selected){
+            c = new Color(91,91,91,100);
+        }
+        else{
+            c = new Color(0,0,0,0);
+        }
+        
+        g2.setColor(c);
+        g2.fillRoundRect(x,y, width, height,35,35);
+        
+        c = new Color(255,255,255);
+        
+        g2.setColor(c);
+
+        g2.setStroke(new BasicStroke());
+        g2.drawRoundRect(x+5,y+5, width-10, height-10,25,25);
+
+        g2.drawString(currentAnsware[rispostaNum], x+100, y+45);
     }
 
     public void drawPauseScreen(){

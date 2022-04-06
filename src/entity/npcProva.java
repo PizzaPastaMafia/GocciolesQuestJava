@@ -17,6 +17,8 @@ public class npcProva extends Entity{
         getImage();
 
         setDialogue();
+
+        dialoguesWithAnsware = false;
     }
 
     public void getImage(){

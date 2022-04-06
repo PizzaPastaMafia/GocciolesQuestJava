@@ -15,6 +15,7 @@ public class Player extends Entity{
 
     public final int screenX;
     public final int screenY;
+    public int npcDialogue;
     int hasKey = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
@@ -22,6 +23,7 @@ public class Player extends Entity{
         
         this.gp = gp;
         this.keyH = keyH;
+        npcDialogue = -1;
 
         screenX = gp.screenWidth/2 - (gp.tileSize/2);
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
@@ -64,15 +66,16 @@ public class Player extends Entity{
             right2 = ImageIO.read(getClass().getResourceAsStream("../player/boy_right_2.png"));
             right3 = ImageIO.read(getClass().getResourceAsStream("../player/boy_right_3.png"));
 
-
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
     public void update() {
-
-        if(keyH.upPressed || keyH.downPressed ||
+        if(gp.gameState == gp.dialogueState && (keyH.enterPressed || gp.ui.answare)){
+            interactNpc(npcDialogue);
+        }
+        else if(keyH.upPressed || keyH.downPressed ||
                 keyH.leftPressed || keyH.rightPressed){
 
             idle = false;
@@ -98,8 +101,9 @@ public class Player extends Entity{
             // CHECK NPC COLLISION
 
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
-            
+
             interactNpc(npcIndex);
+            
             //pickUpObject(objIndex);
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
@@ -136,14 +140,25 @@ public class Player extends Entity{
     }
 
     public void interactNpc(int i){
-        if(i != -1) {
+        if(gp.gameState == gp.dialogueState && (gp.keyH.arrowLeftPressed || gp.keyH.arrowRightPressed)){
+            if(gp.keyH.arrowLeftPressed || gp.keyH.arrowRightPressed){
+                gp.ui.choice = !gp.ui.choice;
+            }
+        }
+        else if(i != -1) {
             if(gp.keyH.enterPressed){
                 gp.gameState = gp.dialogueState;
                 gp.npc[i].speak();
+                npcDialogue = i;
             }
-            
         }
+        else if(gp.gameState == gp.dialogueState && gp.keyH.enterPressed){
+            gp.npc[npcDialogue].speak();
+        }
+        
         gp.keyH.enterPressed = false;
+        gp.keyH.arrowLeftPressed = false;
+        gp.keyH.arrowRightPressed = false;
     }
 
     public void pickUpObject(int i) {

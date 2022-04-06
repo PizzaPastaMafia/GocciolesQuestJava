@@ -107,7 +107,6 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             if(timer >= 1000000000) {
-                System.out.println("FPS: "+drawCount);
                 drawCount = 0;
                 timer = 0;
             }
@@ -127,7 +126,8 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
-        else if(gameState == pauseState){
+        else if(gameState == dialogueState){
+            player.update();
         }
     }
 
@@ -140,6 +140,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         // TILE
         tileM.draw(g2);
+
+        //
 
         // OBJECT
         for(int i = 0; i < obj.length; i++) {

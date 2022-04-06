@@ -19,22 +19,36 @@ public class Entity {
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
     public String[] dialogues = new String[5];
+    public String[][] answare = new String[2][5];
+    public boolean dialoguesWithAnsware;
     int dialogueIndex = 0;
+    int answareIndex = 0;
     public boolean stop;
+    public boolean selected;
+    public boolean endDialogue;
+    public boolean choice;
 
     public Entity(GamePanel gp){
         this.gp = gp;
         stop = false;
+        endDialogue = true;
     }
 
     public void setAction(){}
     
     public void speak(){
-        if(dialogueIndex >= dialogues.length){
+        if(dialogueIndex >= dialogues.length || dialogues[dialogueIndex] == null){
             dialogueIndex = 0;
+            endDialogue = true;
+            gp.gameState = gp.playState;
+            return;
         }
-        
+
+        endDialogue = false;
+
         gp.ui.currentDialogue = dialogues[dialogueIndex];
+        gp.ui.endDialogue = endDialogue;
+        gp.ui.answare = false;
         dialogueIndex++;
 
         switch(gp.player.direction){
